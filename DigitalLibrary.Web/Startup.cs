@@ -1,8 +1,10 @@
 ﻿using DigitalLibrary.Web.Middleware;
 using DigitalLibrary.Web.MiddlewareExtensions;
+using DigitalLibrary.Web.Models;
 using DigitalLibrary.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -20,8 +22,13 @@ namespace DigitalLibrary.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connection = Configuration.GetConnectionString("DefaultConnection");
+            if (connection == null)
+                connection = "testingconnection";
+            services.AddDbContext<DigitalLibraryContext>(options =>
+                options.UseSqlServer(connection));
             services.AddMvc();
-            services.AddTransient<EmailService>();
+            //services.AddTransient<EmailService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
