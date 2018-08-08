@@ -25,8 +25,11 @@ namespace DigitalLibrary.Web
             var connection = Configuration.GetConnectionString("DefaultConnection");
             if (connection == null)
                 connection = "testingconnection";
-            services.AddDbContext<DigitalLibraryContext>(options =>
-                options.UseSqlServer(connection));
+            //services.AddDbContext<DigitalLibraryContext>(options =>
+            //    options.UseSqlServer(connection));
+            services.AddEntityFrameworkNpgsql()
+                .AddDbContext<DigitalLibraryContext>(options =>
+                    options.UseNpgsql(connection));
             services.AddMvc();
             //services.AddTransient<EmailService>();
         }

@@ -37,7 +37,8 @@ namespace DigitalLibrary.Web
                 Subtitle = "Dot Net Core",
                 Summary = ""
             };
-
+            context.AudioBooks.Add(audioBook);
+            context.SaveChanges();
         }
     }
 }
